@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador LM555 | Dispensador Automático</title>
+    <meta name="description" content="Simulación visual e interactiva de un circuito LM555 controlando un servomotor para un dispensador de alimento.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Simulador <span class="highlight">LM555</span></h1>
+            <p>Control de Servomotor para Dispensador de Alimento (Modo Astable)</p>
+            <div class="team-members">
+                <span class="badge">Integrantes:</span>
+                <span class="member">Daniela Pinto</span>
+                <span class="member">Roberto Guillot</span>
+                <span class="member">Ares Garcia</span>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <!-- Panel 1: Controles -->
+            <section class="panel control-panel glass-panel">
+                <div class="panel-header">
+                    <h2><i class="icon">🎛️</i> Panel de Control</h2>
+                </div>
+                
+                <div class="control-group">
+                    <label for="potentiometer" style="display: flex; justify-content: space-between;">
+                        <span>Potenciómetro (100 kΩ)</span>
+                        <span id="pot-percent" style="color: var(--accent-color); font-weight: bold; font-family: var(--font-mono);">0%</span>
+                    </label>
+                    <div class="slider-container">
+                        <span class="slider-min">0%</span>
+                        <input type="range" id="potentiometer" min="0" max="100" value="0" class="styled-slider">
+                        <span class="slider-max">100%</span>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Ancho de Pulso</span>
+                        <span class="stat-value" id="pulse-width">1.00 ms</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Ángulo del Servo</span>
+                        <span class="stat-value" id="servo-angle">0°</span>
+                        <span class="stat-desc" id="door-status">Compuerta Cerrada</span>
+                    </div>
+                    <div class="stat-card full-width">
+                        <span class="stat-label">Frecuencia aprox.</span>
+                        <span class="stat-value tech-font">50 Hz</span>
+                        <span class="stat-desc">Periodo: 20 ms</span>
+                    </div>
+                </div>
+                
+                <div class="circuit-info">
+                    <h3>Matemáticas del LM555</h3>
+                    <div class="math-box">
+                        <p><strong>R1 (Fija):</strong> 3.3 kΩ</p>
+                        <p><strong>R2 (Potenciómetro):</strong> <span id="r2-value">0 kΩ</span></p>
+                        <p><strong>Capacitor (C):</strong> 100 nF</p>
+                        <div class="formula">
+                            <p>t<sub>positivo</sub> ≈ 0.693 × (R1 + R2) × C</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chip-container">
+                        <div class="chip">
+                            <div class="pin left" style="top: 10px;">1</div>
+                            <div class="pin left" style="top: 30px;">2</div>
+                            <div class="pin left" style="top: 50px;">3</div>
+                            <div class="pin left" style="top: 70px;">4</div>
+                            
+                            <div class="chip-label">LM555</div>
+                            
+                            <div class="pin right" style="top: 10px;">8</div>
+                            <div class="pin right" style="top: 30px;">7</div>
+                            <div class="pin right" style="top: 50px;">6</div>
+                            <div class="pin right" style="top: 70px;">5</div>
+                            
+                            <div class="led-out" id="led-out"></div>
+                        </div>
+                        <p>El Pin 3 envía los pulsos.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Panel 2: Osciloscopio -->
+            <section class="panel oscilloscope-panel glass-panel">
+                <div class="panel-header">
+                    <h2><i class="icon">📈</i> Señal PWM (Pin 3)</h2>
+                </div>
+                <div class="oscilloscope-screen">
+                    <canvas id="pwm-canvas"></canvas>
+                    <div class="grid-overlay"></div>
+                    <div class="signal-info">
+                        <span class="signal-label">1ms/div</span>
+                        <span class="signal-label">5V/div</span>
+                    </div>
+                </div>
+                <p class="helper-text">La modulación por ancho de pulso determina la posición exacta del mecanismo.</p>
+            </section>
+
+            <!-- Panel 3: Simulación Física -->
+            <section class="panel simulation-panel glass-panel">
+                <div class="panel-header">
+                    <h2><i class="icon">⚙️</i> Simulación Física</h2>
+                </div>
+                
+                <div class="simulation-area">
+                    <div class="hopper">
+                        <div class="hopper-body"></div>
+                        <div class="hopper-food" id="hopper-food"></div>
+                        <div class="hopper-funnel"></div>
+                        <div class="gate-mechanism">
+                            <div class="gate" id="gate"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="servo-container">
+                        <div class="servo-body">SG90</div>
+                        <div class="servo-gear"></div>
+                        <div class="servo-arm" id="servo-arm"></div>
+                        <div class="linkage" id="linkage"></div>
+                    </div>
+                    
+                    <div class="falling-food-container" id="falling-food-container">
+                        <!-- Partículas de comida generadas por JS -->
+                    </div>
+                    
+                    <div class="trough">
+                        <div class="food-pile" id="food-pile"></div>
+                    </div>
+
+                    <!-- Gallina animada -->
+                    <div class="chicken-container" id="chicken">
+                        <div class="chicken-body">
+                            <div class="chicken-wing"></div>
+                        </div>
+                        <div class="chicken-head-neck">
+                            <div class="chicken-head">
+                                <div class="beak"></div>
+                                <div class="eye"></div>
+                                <div class="comb"></div>
+                                <div class="wattle"></div>
+                            </div>
+                        </div>
+                        <div class="chicken-leg left"></div>
+                        <div class="chicken-leg right"></div>
+                    </div>
+                </div>
+                
+                <div class="panel-footer">
+                    <button class="reload-btn" id="reload-btn">
+                        <span>🔄</span> Recargar Tolva y Limpiar
+                    </button>
+                </div>
+            </section>
+            
+            <!-- Panel 4: IoT Dashboard (Simulado) -->
+            <aside class="panel notifications-panel glass-panel">
+                <div class="panel-header">
+                    <h2><i class="icon">📱</i> Dashboard IoT</h2>
+                </div>
+                <div class="device-mockup">
+                    <div class="mockup-header">App Monitor Granja</div>
+                    <div class="mockup-screen" id="iot-screen">
+                        <div class="status-indicator" id="iot-status-indicator"></div>
+                        <h4 id="iot-status-title">Sistema en Reposo</h4>
+                        <p id="iot-status-msg">Esperando apertura de compuerta.</p>
+                        
+                        <div class="sensor-data">
+                            <div class="sensor-row">
+                                <span>Nivel Tolva:</span>
+                                <strong id="iot-hopper-level">100%</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Sección de Documentación del Proyecto -->
+        <section class="documentation panel glass-panel">
+            <div class="panel-header">
+                <h2><i class="icon">📁</i> Documentación del Proyecto</h2>
+                <p class="panel-subtitle">Planos y diseño de la Placa de Circuito Impreso (PCB)</p>
+            </div>
+            
+            <div class="doc-grid">
+                <div class="doc-item">
+                    <h3>Diagrama Esquemático</h3>
+                    <div class="image-container">
+                        <img src="../esquematico.png" alt="Diagrama Esquemático del LM555 Astable" class="doc-img">
+                    </div>
+                </div>
+                
+                <div class="doc-item">
+                    <h3>Diseño 3D de PCB</h3>
+                    <div class="image-container">
+                        <img src="../pcb.png" alt="Modelo 3D de la Placa PCB" class="doc-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
