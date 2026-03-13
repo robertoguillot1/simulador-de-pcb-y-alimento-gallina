@@ -69,9 +69,9 @@
                 <div class="circuit-info">
                     <h3>Matemáticas del LM555</h3>
                     <div class="math-box">
-                        <p><strong>R1 (Fija):</strong> 3.3 kΩ</p>
-                        <p><strong>R2 (Potenciómetro):</strong> <span id="r2-value">0 kΩ</span></p>
-                        <p><strong>Capacitor (C):</strong> 100 nF</p>
+                        <p><strong>Resistencia (R1):</strong> 4.7 kΩ</p>
+                        <p><strong>C1 (Temporización):</strong> 100 nF</p>
+                        <p><strong>C2 (Filtro):</strong> 10 µF</p>
                         <div class="formula">
                             <p>t<sub>positivo</sub> ≈ 0.693 × (R1 + R2) × C</p>
                         </div>
@@ -191,12 +191,88 @@
                     </div>
                 </div>
             </aside>
+            <!-- Panel 5: Lista de Componentes -->
+            <section class="panel components-panel glass-panel">
+                <div class="panel-header">
+                    <h2><i class="icon">📋</i> Componentes Utilizados</h2>
+                </div>
+                
+                <div class="components-content">
+                    <div class="bom-image-container">
+                        <img src="componentes_electronicos_iot.png" alt="Kit de componentes electrónicos" class="bom-img">
+                        <div class="image-caption">Visualización de los componentes principales del hardware</div>
+                    </div>
+                    
+                    <div class="bom-list">
+                        <div class="bom-item">
+                            <span class="bom-qty">1x</span>
+                            <div class="bom-details">
+                                <strong>CI LM555</strong>
+                                <span>Temporizador de precisión para generación PWM.</span>
+                            </div>
+                        </div>
+                        <div class="bom-item">
+                            <span class="bom-qty">1x</span>
+                            <div class="bom-details">
+                                <strong>Servomotor SG90</strong>
+                                <span>Actuador de 9g para el mecanismo de la tolva.</span>
+                            </div>
+                        </div>
+                        <div class="bom-item">
+                            <span class="bom-qty">1x</span>
+                            <div class="bom-details">
+                                <strong>Potenciómetro 100 kΩ</strong>
+                                <span>Ajuste manual del ciclo de trabajo.</span>
+                            </div>
+                        </div>
+                        <div class="bom-item">
+                            <span class="bom-qty">1x</span>
+                            <div class="bom-details">
+                                <strong>Resistencia 4.7 kΩ</strong>
+                                <span>Limitadora de corriente para el LM555.</span>
+                            </div>
+                        </div>
+                        <div class="bom-item">
+                            <span class="bom-qty">1x</span>
+                            <div class="bom-details">
+                                <strong>Capacitor 100 nF</strong>
+                                <span>Cerámico para el control de temporización.</span>
+                            </div>
+                        </div>
+                        <div class="bom-item">
+                            <span class="bom-qty">1x</span>
+                            <div class="bom-details">
+                                <strong>Capacitor 10 µF</strong>
+                                <span>Electrolítico para estabilidad de voltaje.</span>
+                            </div>
+                        </div>
+                        <div class="bom-item">
+                            <span class="bom-qty">2x</span>
+                            <div class="bom-details">
+                                <strong>Diodos 1N4148</strong>
+                                <span>Para separar la carga y descarga del capacitor.</span>
+                            </div>
+                        </div>
+                        <div class="bom-item">
+                            <span class="bom-qty">1x</span>
+                            <div class="bom-details">
+                                <strong>Batería / Fuente 5V</strong>
+                                <span>Alimentación general del circuito.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <!-- Sección de Documentación del Proyecto -->
         <section class="documentation panel glass-panel">
             <div class="panel-header">
                 <h2><i class="icon">📁</i> Documentación del Proyecto</h2>
+                <div class="software-info">
+                    <span class="badge">Software utilizado:</span>
+                    <span class="member">KiCad 9.0</span>
+                </div>
                 <p class="panel-subtitle">Planos y diseño de la Placa de Circuito Impreso (PCB)</p>
             </div>
             
@@ -204,14 +280,14 @@
                 <div class="doc-item">
                     <h3>Diagrama Esquemático</h3>
                     <div class="image-container">
-                        <img src="../esquematico.png" alt="Diagrama Esquemático del LM555 Astable" class="doc-img">
+                        <img src="esquematico.png" alt="Diagrama Esquemático del LM555 Astable" class="doc-img">
                     </div>
                 </div>
                 
                 <div class="doc-item">
                     <h3>Diseño 3D de PCB</h3>
                     <div class="image-container">
-                        <img src="../pcb.png" alt="Modelo 3D de la Placa PCB" class="doc-img">
+                        <img src="pcb.png" alt="Modelo 3D de la Placa PCB" class="doc-img">
                     </div>
                 </div>
             </div>

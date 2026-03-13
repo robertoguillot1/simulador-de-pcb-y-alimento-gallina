@@ -88,7 +88,7 @@ function updateSimulation() {
     }
 
     // Actualizar Panel Matemático
-    // R2 = 0 a 100k
+    // R1 = 4.7k, R2 = 0 a 100k
     const r2Ohms = (sliderValue / 100) * 100;
     r2ValueDisplay.textContent = `${r2Ohms.toFixed(1)} kΩ`;
 

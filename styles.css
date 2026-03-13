@@ -88,6 +88,7 @@ header h1 {
 .highlight {
     background: linear-gradient(135deg, #58a6ff, #5eead4);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -129,7 +130,8 @@ header p {
     gap: 2rem;
     grid-template-areas: 
         "control simulation iot"
-        "control simulation oscilloscope";
+        "control simulation oscilloscope"
+        "components components components";
 }
 
 @media (max-width: 1200px) {
@@ -203,6 +205,7 @@ header p {
 .styled-slider {
     flex-grow: 1;
     -webkit-appearance: none;
+    appearance: none;
     width: 100%;
     height: 16px;
     border-radius: 8px;
@@ -1000,3 +1003,128 @@ header p {
     object-fit: contain; /* ensures whole image is visible without stretching */
     background: rgba(255, 255, 255, 0.02);
 }
+
+/* Components Panel */
+.components-panel {
+    grid-area: components;
+    margin-top: 1rem;
+}
+
+.components-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+@media (max-width: 900px) {
+    .components-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bom-image-container {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    padding: 1rem;
+    border: 1px solid var(--panel-border);
+    text-align: center;
+}
+
+.bom-img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.bom-img:hover {
+    transform: scale(1.02);
+}
+
+.image-caption {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.bom-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .bom-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bom-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.2s;
+}
+
+.bom-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.bom-qty {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    flex-shrink: 0;
+}
+
+.bom-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.bom-details strong {
+    color: var(--text-primary);
+    font-size: 1.05rem;
+}
+
+.bom-details span {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.software-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.software-info .badge {
+    color: var(--warning-color);
+    font-weight: bold;
+}
+
+.software-info .member {
+    background: rgba(94, 234, 212, 0.1);
+    border: 1px solid rgba(94, 234, 212, 0.3);
+    color: #5eead4;
+    padding: 0.2rem 0.8rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+}
+
